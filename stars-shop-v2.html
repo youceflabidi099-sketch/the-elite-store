@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>⭐ Stars DZ Shop</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080c14;
+  --surface: #0e1320;
+  --card: #131926;
+  --card2: #192033;
+  --border: rgba(99,179,237,0.1);
+  --border2: rgba(99,179,237,0.2);
+  --gold: #f6c90e;
+  --gold2: #f59e0b;
+  --blue: #3b82f6;
+  --blue2: #60a5fa;
+  --cyan: #06b6d4;
+  --green: #10b981;
+  --red: #ef4444;
+  --orange: #f97316;
+  --text: #e8f0fe;
+  --muted: #5a6a82;
+  --muted2: #8899b4;
+  --r: 14px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow-x:hidden}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* BG MESH */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 600px 400px at 20% -10%,rgba(59,130,246,0.08) 0%,transparent 70%),
+    radial-gradient(ellipse 500px 350px at 80% 110%,rgba(246,201,14,0.06) 0%,transparent 70%),
+    radial-gradient(ellipse 300px 300px at 60% 40%,rgba(6,182,212,0.04) 0%,transparent 70%);
+}
+
+/* ======= HEADER ======= */
+.header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(8,12,20,0.96);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+  padding:12px 16px 10px;
+}
+.h-row1{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-box{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,#f6c90e,#f97316);
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  box-shadow:0 4px 14px rgba(246,201,14,0.35);
+}
+.logo-name{font-size:17px;font-weight:900;letter-spacing:0.5px;
+  background:linear-gradient(90deg,#f6c90e,#60a5fa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.bal-chip{
+  display:flex;align-items:center;gap:7px;
+  background:var(--card2);border:1px solid var(--border2);
+  border-radius:20px;padding:6px 12px;cursor:pointer;transition:.2s
+}
+.bal-chip:active{transform:scale(.95)}
+.bal-chip .live{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green)}
+.bal-chip span{font-size:13px;font-weight:800;color:var(--blue2)}
+
+/* TABS */
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex-shrink:0;padding:6px 14px;border-radius:20px;font-size:12.5px;font-weight:700;
+  cursor:pointer;transition:.2s;border:1px solid transparent;white-space:nowrap;
+  background:var(--card);color:var(--muted2)
+}
+.tab.active{
+  background:linear-gradient(135deg,rgba(59,130,246,.2),rgba(6,182,212,.1));
+  border-color:rgba(59,130,246,.4);color:var(--blue2)
+}
+
+/* ======= CONTENT ======= */
+.content{padding:18px 14px 100px;position:relative;z-index:1}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(246,201,14,.08));
+  border:1px solid rgba(59,130,246,.2);border-radius:var(--r);
+  padding:18px;margin-bottom:22px;position:relative;overflow:hidden
+}
+.hero::after{content:'⭐';position:absolute;font-size:90px;left:-15px;bottom:-20px;opacity:.08;filter:blur(3px)}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(246,201,14,.15);border:1px solid rgba(246,201,14,.3);
+  color:var(--gold);font-size:11px;font-weight:800;padding:3px 10px;
+  border-radius:20px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px
+}
+.hero h2{font-size:21px;font-weight:900;line-height:1.3;margin-bottom:5px}
+.hero p{font-size:12.5px;color:var(--muted2)}
+.hero-stats{display:flex;gap:14px;margin-top:12px}
+.h-stat{text-align:center}
+.h-stat .n{font-size:16px;font-weight:900;color:var(--blue2)}
+.h-stat .l{font-size:10px;color:var(--muted);font-weight:600}
+
+/* SECTION TITLE */
+.sec-title{font-size:15px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:7px;color:var(--text)}
+.sec-title .ic{font-size:18px}
+
+/* STARS PACKAGES — radio list style like screenshot */
+.pkg-list{display:flex;flex-direction:column;gap:8px;margin-bottom:26px}
+.pkg-item{
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:var(--r);padding:13px 14px;
+  display:flex;align-items:center;gap:12px;
+  cursor:pointer;transition:.2s;position:relative;overflow:hidden
+}
+.pkg-item:active{transform:scale(.98)}
+.pkg-item.selected{
+  border-color:rgba(59,130,246,.6);
+  background:linear-gradient(135deg,rgba(59,130,246,.1),rgba(6,182,212,.05))
+}
+.pkg-radio{
+  width:20px;height:20px;border-radius:50%;
+  border:2px solid var(--muted);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;transition:.2s
+}
+.pkg-item.selected .pkg-radio{border-color:var(--blue2)}
+.pkg-radio::after{
+  content:'';width:10px;height:10px;border-radius:50%;
+  background:var(--blue2);opacity:0;transition:.2s
+}
+.pkg-item.selected .pkg-radio::after{opacity:1}
+.pkg-icon{font-size:22px;flex-shrink:0}
+.pkg-name{font-size:14px;font-weight:800;flex:1}
+.pkg-right{text-align:left;flex-shrink:0}
+.pkg-ton{font-size:12px;color:var(--cyan);font-weight:700;display:flex;align-items:center;gap:3px}
+.pkg-usd{font-size:13px;font-weight:800;color:var(--text)}
+.pkg-dzd{font-size:11px;color:var(--muted2)}
+.pkg-badge{
+  position:absolute;top:6px;left:8px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#000;font-size:9px;font-weight:900;padding:2px 7px;border-radius:10px
+}
+.pkg-discount{
+  background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.3);
+  color:var(--green);font-size:10px;font-weight:800;padding:2px 7px;border-radius:10px;
+  margin-right:6px
+}
+
+/* CUSTOM AMOUNT */
+.custom-input-wrap{
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:var(--r);padding:14px;margin-bottom:22px
+}
+.custom-input-wrap label{font-size:12px;color:var(--muted2);font-weight:700;margin-bottom:8px;display:block}
+.inp-row{display:flex;align-items:center;gap:10px}
+.inp-icon{font-size:22px}
+.form-input{
+  flex:1;background:rgba(255,255,255,.04);border:1.5px solid var(--border);
+  border-radius:10px;padding:11px 14px;color:var(--text);
+  font-family:'Cairo',sans-serif;font-size:14px;outline:none;transition:.2s
+}
+.form-input:focus{border-color:rgba(59,130,246,.5);background:rgba(59,130,246,.04)}
+.form-input::placeholder{color:var(--muted)}
+select.form-input{cursor:pointer}
+
+/* PROFIT DISPLAY */
+.profit-box{
+  background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.05));
+  border:1px solid rgba(16,185,129,.2);border-radius:var(--r);
+  padding:14px;margin-bottom:14px
+}
+.profit-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px}
+.profit-row:last-child{margin-bottom:0;border-top:1px dashed rgba(255,255,255,.08);padding-top:10px;margin-top:4px}
+.profit-row .lbl{color:var(--muted2)}
+.profit-row .val{font-weight:800}
+.profit-row.total .lbl{font-size:15px;font-weight:800;color:var(--text)}
+.profit-row.total .val{font-size:17px;color:var(--gold)}
+.profit-row .markup{font-size:10px;color:var(--green);margin-right:4px;font-weight:700}
+
+/* ORDER FORM */
+.order-form{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:18px}
+.form-title{font-size:17px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.form-group{margin-bottom:14px}
+.form-label{font-size:12.5px;color:var(--muted2);font-weight:700;margin-bottom:7px;display:block}
+.form-note{font-size:11px;color:var(--muted);margin-top:5px;display:flex;align-items:center;gap:4px}
+
+/* PAYMENT METHODS */
+.pm-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.pm-item{
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:var(--r);padding:14px 16px;
+  display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s
+}
+.pm-item:active{transform:scale(.98)}
+.pm-item.selected{border-color:rgba(16,185,129,.5);background:rgba(16,185,129,.05)}
+.pm-ico{font-size:26px;flex-shrink:0}
+.pm-info{flex:1}
+.pm-name{font-size:14px;font-weight:800}
+.pm-desc{font-size:11.5px;color:var(--muted2);margin-top:2px}
+.pm-check{color:var(--green);font-size:16px;opacity:0;transition:.2s;margin-right:auto}
+.pm-item.selected .pm-check{opacity:1}
+
+/* PAYMENT INSTRUCTIONS */
+.pay-instructions{
+  background:var(--card2);border:1.5px solid var(--border2);
+  border-radius:var(--r);padding:16px;margin-bottom:16px;display:none
+}
+.pay-instructions.show{display:block}
+.pi-title{font-size:14px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:7px}
+.info-row{
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+  border-radius:10px;padding:10px 14px;margin-bottom:8px
+}
+.info-row .ik{font-size:12px;color:var(--muted2)}
+.info-row .iv{font-size:14px;font-weight:800;color:var(--blue2)}
+.copy-btn{
+  background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);
+  color:var(--blue2);font-size:11px;font-weight:800;padding:4px 10px;
+  border-radius:8px;cursor:pointer;flex-shrink:0;font-family:'Cairo',sans-serif;
+  transition:.2s
+}
+.copy-btn:active{transform:scale(.92)}
+.warn-box{
+  background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.25);
+  border-radius:10px;padding:10px 14px;margin-top:10px;
+  font-size:12px;color:#fb923c;display:flex;gap:8px;align-items:flex-start
+}
+
+/* FILE UPLOAD */
+.upload-area{
+  border:2px dashed var(--border2);border-radius:var(--r);
+  padding:20px;text-align:center;cursor:pointer;transition:.2s;
+  background:rgba(59,130,246,.03)
+}
+.upload-area:hover{border-color:rgba(59,130,246,.4);background:rgba(59,130,246,.06)}
+.upload-area.has-file{border-color:rgba(16,185,129,.4);background:rgba(16,185,129,.05)}
+.upload-ico{font-size:32px;margin-bottom:8px}
+.upload-txt{font-size:13px;font-weight:700;color:var(--muted2)}
+.upload-sub{font-size:11px;color:var(--muted);margin-top:4px}
+#receipt-file{display:none}
+
+/* SUBMIT BTN */
+.submit-btn{
+  width:100%;padding:15px;border-radius:13px;font-family:'Cairo',sans-serif;
+  font-size:15px;font-weight:900;cursor:pointer;transition:.25s;border:none;
+  display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px
+}
+.submit-btn.primary{
+  background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;
+  box-shadow:0 6px 20px rgba(59,130,246,.35)
+}
+.submit-btn.gold{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;
+  box-shadow:0 6px 20px rgba(246,201,14,.3)
+}
+.submit-btn:active{transform:scale(.97)}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* ORDERS */
+.orders-list{display:flex;flex-direction:column;gap:10px}
+.order-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:15px 16px;cursor:pointer;transition:.2s}
+.order-card:active{transform:scale(.99)}
+.oc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.oc-id{font-size:11px;color:var(--muted);margin-bottom:3px}
+.oc-name{font-size:14px;font-weight:800}
+.status-badge{font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+.s-pending{background:rgba(59,130,246,.15);color:var(--blue2);border:1px solid rgba(59,130,246,.3)}
+.s-review{background:rgba(249,115,22,.15);color:var(--orange);border:1px solid rgba(249,115,22,.3)}
+.s-processing{background:rgba(246,201,14,.15);color:var(--gold);border:1px solid rgba(246,201,14,.3)}
+.s-completed{background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3)}
+.s-cancelled{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+.oc-meta{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--muted2);margin-bottom:10px}
+.oc-meta span{display:flex;align-items:center;gap:4px}
+.progress-bar{width:100%;height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .6s}
+
+/* RECEIPT MODAL */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);
+  z-index:200;display:flex;align-items:flex-end;opacity:0;
+  pointer-events:none;transition:opacity .3s
+}
+.modal-overlay.show{opacity:1;pointer-events:all}
+.modal{
+  background:var(--surface);border-radius:22px 22px 0 0;
+  padding:22px 18px 40px;width:100%;border-top:1px solid var(--border2);
+  transform:translateY(100%);transition:transform .35s cubic-bezier(.34,1.56,.64,1)
+}
+.modal-overlay.show .modal{transform:translateY(0)}
+.modal-handle{width:38px;height:4px;background:rgba(255,255,255,.12);border-radius:2px;margin:0 auto 18px}
+
+/* RECEIPT CARD */
+.receipt-card{
+  background:linear-gradient(135deg,var(--card2),var(--card));
+  border:1px solid var(--border2);border-radius:var(--r);padding:20px;margin-bottom:16px;
+  position:relative;overflow:hidden
+}
+.receipt-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--blue),var(--cyan))
+}
+.receipt-logo{text-align:center;margin-bottom:14px}
+.receipt-logo .rl-ico{font-size:36px;margin-bottom:4px}
+.receipt-logo .rl-name{font-size:16px;font-weight:900;color:var(--gold)}
+.receipt-divider{border:none;border-top:1px dashed rgba(255,255,255,.1);margin:14px 0}
+.receipt-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:13px}
+.receipt-row .rk{color:var(--muted2);font-size:12px}
+.receipt-row .rv{font-weight:800;text-align:left;max-width:55%}
+.receipt-row.total-row{padding:10px 0 0;margin-top:6px;border-top:1px solid var(--border2)}
+.receipt-row.total-row .rk{font-size:14px;font-weight:800;color:var(--text)}
+.receipt-row.total-row .rv{font-size:18px;color:var(--gold)}
+.receipt-status{
+  text-align:center;padding:10px;
+  background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);
+  border-radius:10px;color:var(--green);font-size:13px;font-weight:800;margin-top:10px
+}
+.receipt-id{text-align:center;font-size:11px;color:var(--muted);margin-top:8px}
+
+/* WALLET PAGE */
+.wallet-hero{
+  background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(6,182,212,.1));
+  border:1px solid rgba(59,130,246,.25);border-radius:var(--r);padding:22px;
+  text-align:center;margin-bottom:22px
+}
+.wallet-bal{font-size:44px;font-weight:900;color:var(--blue2);margin:8px 0}
+.wallet-dzd{font-size:16px;color:var(--muted2);font-weight:700}
+.wallet-actions{display:flex;gap:10px;margin-top:16px}
+.wa-btn{flex:1;padding:11px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:800;cursor:pointer;border:none;transition:.2s}
+.wa-btn:active{transform:scale(.97)}
+.wa-btn.p{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff}
+.wa-btn.s{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--border2)}
+
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center}
+.stat-card .sn{font-size:26px;font-weight:900}
+.stat-card .sl{font-size:11px;color:var(--muted2);margin-top:3px}
+
+/* BOTTOM NAV */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:100;
+  background:rgba(14,19,32,0.97);backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  display:flex;padding:6px 0 max(12px, env(safe-area-inset-bottom))
+}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;transition:.2s;padding:5px}
+.nav-item:active{transform:scale(.9)}
+.nav-ico{font-size:20px;line-height:1;transition:.3s}
+.nav-lbl{font-size:10px;font-weight:700;color:var(--muted)}
+.nav-item.active .nav-lbl{color:var(--blue2)}
+.nav-item.active .nav-ico{filter:drop-shadow(0 0 5px rgba(96,165,250,.6));transform:scale(1.1)}
+
+/* PAGES */
+.page{display:none}.page.active{display:block}
+
+/* TOAST */
+.toast{
+  position:fixed;top:78px;left:50%;transform:translateX(-50%) translateY(-12px);
+  background:var(--card2);border:1px solid var(--border2);border-radius:22px;
+  padding:9px 18px;font-size:13px;font-weight:700;z-index:999;
+  opacity:0;transition:.3s;white-space:nowrap;pointer-events:none;
+  box-shadow:0 8px 30px rgba(0,0,0,.5)
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fade-up{animation:fadeUp .4s ease forwards}
+.spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+.spinner.dark{border-color:rgba(0,0,0,.2);border-top-color:#000}
+
+/* EMPTY */
+.empty{text-align:center;padding:40px 20px;color:var(--muted2)}
+.empty .eico{font-size:52px;opacity:.4;margin-bottom:12px;display:block}
+.empty h3{font-size:15px;font-weight:800;margin-bottom:5px;color:var(--text)}
+.empty p{font-size:12.5px}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="h-row1">
+    <div class="logo">
+      <div class="logo-box">⭐</div>
+      <span class="logo-name">Stars DZ</span>
+    </div>
+    <div class="bal-chip" onclick="showPage('support')">
+      <span class="live"></span>
+      <span>متصل 🟢</span>
+    </div>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchCat('stars',this)">⭐ نجوم تيليقرام</div>
+    <div class="tab" onclick="switchCat('premium',this)">💎 بريميوم</div>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ======= HOME ======= -->
+<div id="page-home" class="page active fade-up">
+
+  <div class="hero">
+    <div class="hero-pill">🇩🇿 متاح في الجزائر</div>
+    <h2>نجوم وخدمات<br>تيليقرام 🌟</h2>
+    <p>دفع بـ CCP وفليكسي • تسليم فوري • ضمان كامل</p>
+    <div class="hero-stats">
+      <div class="h-stat"><div class="n">+500</div><div class="l">عميل</div></div>
+      <div class="h-stat"><div class="n">99%</div><div class="l">رضا</div></div>
+      <div class="h-stat"><div class="n">24/7</div><div class="l">دعم</div></div>
+      <div class="h-stat"><div class="n">فوري</div><div class="l">تسليم</div></div>
+    </div>
+  </div>
+
+  <!-- STARS PACKAGES -->
+  <div id="cat-stars">
+    <div class="sec-title"><span class="ic">⭐</span> اختر كمية النجوم</div>
+
+    <!-- Custom amount -->
+    <div class="custom-input-wrap">
+      <label>أو أدخل كمية مخصصة (50 → 1,000,000)</label>
+      <div class="inp-row">
+        <span class="inp-icon">⭐</span>
+        <input type="number" class="form-input" id="custom-stars" min="50" max="1000000" placeholder="مثال: 750" oninput="onCustomStars()">
+      </div>
+    </div>
+
+    <div class="sec-title"><span class="ic">📦</span> أو اختر باقة جاهزة</div>
+    <div class="pkg-list" id="stars-list"></div>
+
+    <button class="submit-btn gold" onclick="goToOrder('stars')">
+      <span>متابعة الطلب ➜</span>
+    </button>
+  </div>
+
+  <!-- PREMIUM PACKAGES -->
+  <div id="cat-premium" style="display:none">
+    <div class="sec-title"><span class="ic">💎</span> بريميوم تيليقرام</div>
+    <div class="pkg-list" id="premium-list"></div>
+    <button class="submit-btn gold" onclick="goToOrder('premium')">
+      <span>متابعة الطلب ➜</span>
+    </button>
+  </div>
+
+</div>
+
+<!-- ======= ORDER PAGE ======= -->
+<div id="page-order" class="page fade-up">
+
+  <div class="order-form">
+    <div class="form-title" id="ord-title">🛒 تفاصيل الطلب</div>
+
+    <!-- Link input -->
+    <div class="form-group">
+      <label class="form-label">🔗 رابط الحساب / القناة</label>
+      <input type="text" class="form-input" id="ord-link" placeholder="@username أو t.me/...">
+      <div class="form-note">⚠️ تأكد من صحة الرابط قبل الإرسال</div>
+    </div>
+
+    <!-- Qty (for non-package) -->
+    <div class="form-group" id="ord-qty-group" style="display:none">
+      <label class="form-label">📊 الكمية</label>
+      <input type="number" class="form-input" id="ord-qty" placeholder="أدخل الكمية" oninput="recalcOrder()">
+    </div>
+
+    <!-- Summary -->
+    <div class="profit-box" id="profit-box"></div>
+
+  </div>
+
+  <!-- PAYMENT METHODS -->
+  <div class="order-form">
+    <div class="form-title">💳 طريقة الدفع</div>
+    <div class="pm-list">
+
+      <div class="pm-item" onclick="selectPM(this,'ccp')">
+        <div class="pm-ico">🏦</div>
+        <div class="pm-info">
+          <div class="pm-name">تحويل CCP بريد</div>
+          <div class="pm-desc">تحويل مباشر لحساب البريد الجزائري</div>
+        </div>
+        <div class="pm-check">✓</div>
+      </div>
+
+      <div class="pm-item" onclick="selectPM(this,'flexy')">
+        <div class="pm-ico">📱</div>
+        <div class="pm-info">
+          <div class="pm-name">فليكسي Flexy</div>
+          <div class="pm-desc">تعبئة رقم الفليكسي مباشرة</div>
+        </div>
+        <div class="pm-check">✓</div>
+      </div>
+
+      <div class="pm-item" onclick="selectPM(this,'usdt')">
+        <div class="pm-ico">💰</div>
+        <div class="pm-info">
+          <div class="pm-name">USDT — شبكة BEP20</div>
+          <div class="pm-desc">دفع بالعملة الرقمية • تحويل مباشر</div>
+        </div>
+        <div class="pm-check">✓</div>
+      </div>
+
+    </div>
+
+    <!-- CCP INSTRUCTIONS -->
+    <div class="pay-instructions" id="pi-ccp">
+      <div class="pi-title">🏦 بيانات حساب CCP</div>
+      <div class="info-row">
+        <div><div class="ik">الاسم واللقب</div><div class="iv">M.LABIDI MOHAMED ISLAM</div></div>
+        <button class="copy-btn" onclick="copyText('M.LABIDI MOHAMED ISLAM')">نسخ</button>
+      </div>
+      <div class="info-row">
+        <div><div class="ik">رقم الـ RIP</div><div class="iv">38 00411839</div></div>
+        <button class="copy-btn" onclick="copyText('3800411839')">نسخ</button>
+      </div>
+      <div class="info-row">
+        <div><div class="ik">المفتاح</div><div class="iv">08</div></div>
+        <button class="copy-btn" onclick="copyText('08')">نسخ</button>
+      </div>
+      <div class="warn-box">
+        ⚠️ بعد التحويل أرفق وصل الدفع أدناه. سيتم تفعيل طلبك بعد التحقق.
+      </div>
+    </div>
+
+    <!-- FLEXY INSTRUCTIONS -->
+    <div class="pay-instructions" id="pi-flexy">
+      <div class="pi-title">📱 بيانات فليكسي</div>
+      <div class="info-row">
+        <div><div class="ik">رقم الفليكسي</div><div class="iv">0549 89 46 47</div></div>
+        <button class="copy-btn" onclick="copyText('0549894647')">نسخ</button>
+      </div>
+      <div class="info-row">
+        <div><div class="ik">المبلغ المطلوب</div><div class="iv" id="flexy-amount">—</div></div>
+      </div>
+      <div class="warn-box">
+        ⚠️ تأكد من كتابة الرقم بشكل صحيح قبل الإرسال. أرسل وصل التعبئة أدناه.
+      </div>
+    </div>
+
+    <!-- USDT INSTRUCTIONS -->
+    <div class="pay-instructions" id="pi-usdt">
+      <div class="pi-title">💰 بيانات USDT BEP20</div>
+      <div class="info-row">
+        <div><div class="ik">الشبكة</div><div class="iv">BEP20 (BSC)</div></div>
+      </div>
+      <div class="info-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <div class="ik">عنوان المحفظة</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;width:100%;gap:8px">
+          <div class="iv" style="font-size:11px;word-break:break-all;direction:ltr">0x88292abeb4b14dc976bd244bc1a458d9b361bf01</div>
+          <button class="copy-btn" style="flex-shrink:0" onclick="copyText('0x88292abeb4b14dc976bd244bc1a458d9b361bf01')">نسخ</button>
+        </div>
+      </div>
+      <div class="warn-box">
+        ⚠️ تأكد من اختيار شبكة <strong>BEP20</strong> عند الإرسال. إرسال على شبكة خاطئة يعني فقدان الأموال. بعد التحويل أرفق وصل المعاملة (TXID).
+      </div>
+    </div>
+    <div class="form-group" id="receipt-group" style="display:none">
+      <label class="form-label">📎 وصل الدفع</label>
+      <div class="upload-area" id="upload-area" onclick="document.getElementById('receipt-file').click()">
+        <div class="upload-ico">📸</div>
+        <div class="upload-txt">اضغط لرفع الوصل</div>
+        <div class="upload-sub">صورة أو PDF • حجم أقصى 5MB</div>
+      </div>
+      <input type="file" id="receipt-file" accept="image/*,application/pdf" onchange="onFileUpload(event)">
+    </div>
+
+    <button class="submit-btn primary" onclick="submitOrder()" id="submit-btn">
+      <span id="submit-txt">إرسال الطلب 🚀</span>
+    </button>
+  </div>
+
+</div>
+
+<!-- ======= ORDERS PAGE ======= -->
+<div id="page-orders" class="page fade-up">
+  <div class="sec-title" style="margin-bottom:16px"><span class="ic">📋</span> طلباتي</div>
+  <div class="orders-list" id="orders-list"></div>
+</div>
+
+<!-- ======= SUPPORT PAGE ======= -->
+<div id="page-support" class="page fade-up">
+
+  <div class="sec-title" style="margin-bottom:18px"><span class="ic">💬</span> الدعم والتواصل</div>
+
+  <!-- Support channel -->
+  <div style="background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(6,182,212,.08));border:1px solid rgba(59,130,246,.25);border-radius:var(--r);padding:20px;margin-bottom:14px;display:flex;align-items:center;gap:16px;cursor:pointer" onclick="openTg('https://t.me/wuldc')">
+    <div style="width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;box-shadow:0 4px 16px rgba(59,130,246,.4)">💬</div>
+    <div style="flex:1">
+      <div style="font-size:16px;font-weight:900;margin-bottom:4px">قناة الدعم</div>
+      <div style="font-size:13px;color:var(--blue2);font-weight:700">@wuldc</div>
+      <div style="font-size:11.5px;color:var(--muted2);margin-top:3px">للتواصل والاستفسارات • متاح 24/7</div>
+    </div>
+    <div style="font-size:20px;color:var(--muted2)">←</div>
+  </div>
+
+  <!-- Proofs channel -->
+  <div style="background:linear-gradient(135deg,rgba(246,201,14,.1),rgba(249,115,22,.08));border:1px solid rgba(246,201,14,.25);border-radius:var(--r);padding:20px;margin-bottom:24px;display:flex;align-items:center;gap:16px;cursor:pointer" onclick="openTg('https://t.me/Elitestarproofs')">
+    <div style="width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;box-shadow:0 4px 16px rgba(246,201,14,.35)">🏆</div>
+    <div style="flex:1">
+      <div style="font-size:16px;font-weight:900;margin-bottom:4px">قناة البروف</div>
+      <div style="font-size:13px;color:var(--gold);font-weight:700">@Elitestarproofs</div>
+      <div style="font-size:11.5px;color:var(--muted2);margin-top:3px">إثباتات الطلبات المنجزة</div>
+    </div>
+    <div style="font-size:20px;color:var(--muted2)">←</div>
+  </div>
+
+  <!-- Info Cards -->
+  <div class="sec-title" style="margin-bottom:12px"><span class="ic">ℹ️</span> معلومات المنصة</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center">
+      <div style="font-size:28px;margin-bottom:6px">⭐</div>
+      <div style="font-size:13px;font-weight:800">نجوم تيليقرام</div>
+      <div style="font-size:10px;color:var(--muted2);margin-top:3px">50 → 1,000,000</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center">
+      <div style="font-size:28px;margin-bottom:6px">💎</div>
+      <div style="font-size:13px;font-weight:800">بريميوم</div>
+      <div style="font-size:10px;color:var(--muted2);margin-top:3px">3 أشهر → سنة</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center">
+      <div style="font-size:28px;margin-bottom:6px">🏦</div>
+      <div style="font-size:13px;font-weight:800">CCP بريد</div>
+      <div style="font-size:10px;color:var(--muted2);margin-top:3px">38 00411839</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center">
+      <div style="font-size:28px;margin-bottom:6px">📱</div>
+      <div style="font-size:13px;font-weight:800">فليكسي</div>
+      <div style="font-size:10px;color:var(--muted2);margin-top:3px">0549 89 46 47</div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="sec-title" style="margin-bottom:12px"><span class="ic">❓</span> أسئلة شائعة</div>
+  <style>
+    .faq-item{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:.2s}
+    .faq-item.open{border-color:rgba(59,130,246,.35);background:linear-gradient(135deg,rgba(59,130,246,.07),rgba(6,182,212,.04))}
+    .faq-q{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;gap:10px}
+    .faq-q:active{opacity:.8}
+    .faq-q-text{font-size:13px;font-weight:800;flex:1}
+    .faq-arrow{font-size:13px;color:var(--muted);transition:transform .3s;flex-shrink:0}
+    .faq-item.open .faq-arrow{transform:rotate(180deg);color:var(--blue2)}
+    .faq-ans{max-height:0;overflow:hidden;transition:max-height .35s ease, padding .3s ease}
+    .faq-item.open .faq-ans{max-height:200px}
+    .faq-ans-inner{padding:0 16px 14px;font-size:12.5px;color:var(--muted2);line-height:1.7;border-top:1px dashed rgba(255,255,255,.07);padding-top:10px}
+  </style>
+  <div style="display:flex;flex-direction:column;gap:8px" id="faq-list">
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><span class="faq-q-text">⏱️ كم وقت التسليم؟</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-ans"><div class="faq-ans-inner">النجوم تُسلَّم فورياً بعد التحقق من الدفع. البريميوم خلال 5-30 دقيقة.</div></div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><span class="faq-q-text">🔒 هل الخدمة آمنة؟</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-ans"><div class="faq-ans-inner">نعم، جميع الخدمات رسمية وآمنة 100%. شاهد البروف في قناة @Elitestarproofs.</div></div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><span class="faq-q-text">💳 كيف أدفع؟</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-ans"><div class="faq-ans-inner">عبر CCP بريد أو فليكسي. أرسل وصل الدفع وسيتم تأكيد طلبك فوراً.</div></div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><span class="faq-q-text">🌟 ما الفرق بين النجوم والبريميوم؟</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-ans"><div class="faq-ans-inner">النجوم ⭐ تُرسَل كهدية لأي شخص وتُستخدم داخل تيليقرام. البريميوم 💎 يفعّل مميزات مدفوعة على حساب المستخدم مثل الستيكرات والرفع والمزيد.</div></div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><span class="faq-q-text">📲 كيف أرسل النجوم لشخص آخر؟</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-ans"><div class="faq-ans-inner">بعد الشراء، ادخل على حساب الشخص في تيليقرام ← اضغط على اسمه ← "إرسال هدية" ← اختر النجوم. سنحتاج يوزرنيم أو رابط الحساب عند الطلب.</div></div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><span class="faq-q-text">💰 ما هو الحد الأدنى للطلب؟</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-ans"><div class="faq-ans-inner">الحد الأدنى للنجوم هو 50 نجمة. للبريميوم الحد الأدنى 3 أشهر. لا يوجد حد أقصى.</div></div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><span class="faq-q-text">🔄 هل يمكن استرداد المبلغ؟</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-ans"><div class="faq-ans-inner">في حالة عدم تنفيذ الطلب خلال 24 ساعة، يتم استرداد المبلغ كاملاً. تواصل معنا على @wuldc.</div></div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><span class="faq-q-text">📸 ماذا أرسل كوصل دفع؟</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-ans"><div class="faq-ans-inner">صورة واضحة لإيصال التحويل من تطبيق بريدي (CCP)، أو صورة رسالة تأكيد تعبئة الفليكسي من الرقم.</div></div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><span class="faq-q-text">🕐 ما هي ساعات العمل؟</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-ans"><div class="faq-ans-inner">نعمل 24 ساعة / 7 أيام. الردود تكون في أسرع وقت ممكن. معظم الطلبات تُنفَّذ تلقائياً.</div></div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><span class="faq-q-text">🇩🇿 هل الخدمة متاحة في كل الجزائر؟</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-ans"><div class="faq-ans-inner">نعم، متاح في جميع ولايات الجزائر. الدفع عبر CCP أو فليكسي من أي مكان.</div></div>
+    </div>
+  </div>
+
+</div>
+
+</div><!-- /content -->
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="nav-item active" id="nav-home" onclick="showPage('home')">
+    <div class="nav-ico">🏠</div><div class="nav-lbl">الرئيسية</div>
+  </div>
+  <div class="nav-item" id="nav-order" onclick="showPage('order')">
+    <div class="nav-ico">🛒</div><div class="nav-lbl">طلب</div>
+  </div>
+  <div class="nav-item" id="nav-orders" onclick="showPage('orders')">
+    <div class="nav-ico">📋</div><div class="nav-lbl">طلباتي</div>
+  </div>
+  <div class="nav-item" id="nav-support" onclick="showPage('support')">
+    <div class="nav-ico">💬</div><div class="nav-lbl">الدعم</div>
+  </div>
+</div>
+
+<!-- RECEIPT MODAL -->
+<div class="modal-overlay" id="receipt-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div id="receipt-content"></div>
+    <button class="submit-btn primary" onclick="closeReceiptModal()" style="margin-top:0">
+      إغلاق
+    </button>
+  </div>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="success-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div style="text-align:center;margin-bottom:18px">
+      <div style="font-size:56px;margin-bottom:10px">✅</div>
+      <div style="font-size:20px;font-weight:900;margin-bottom:6px">تم إرسال طلبك!</div>
+      <div style="font-size:13px;color:var(--muted2)">سيتم مراجعة الوصل وتنفيذ طلبك في أقرب وقت</div>
+    </div>
+    <div class="receipt-card" id="success-receipt"></div>
+    <button class="submit-btn gold" onclick="closeSuccess()">عرض الوصل الكامل 🧾</button>
+  </div>
+</div>
+
+<script>
+// =========== CONFIG ===========
+const USD_TO_DZD = 280; // سعر الصرف الدج
+const PROFIT_MARGIN = 0.25; // 25% هامش ربح
+
+// =========== DATA ===========
+const starsPackages = [
+  { id:'s50',   stars:50,    usd:0.75,  ton:0.6078,  emoji:'⭐',  popular:false },
+  { id:'s75',   stars:75,    usd:1.13,  ton:0.9117,  emoji:'⭐',  popular:false },
+  { id:'s100',  stars:100,   usd:1.50,  ton:1.2157,  emoji:'⭐',  popular:false },
+  { id:'s150',  stars:150,   usd:2.25,  ton:1.8235,  emoji:'🌟',  popular:false },
+  { id:'s250',  stars:250,   usd:3.75,  ton:3.0393,  emoji:'🌟',  popular:true  },
+  { id:'s350',  stars:350,   usd:5.25,  ton:4.2550,  emoji:'💫',  popular:false },
+  { id:'s500',  stars:500,   usd:7.50,  ton:6.0785,  emoji:'💫',  popular:false },
+  { id:'s1000', stars:1000,  usd:15.00, ton:12.157,  emoji:'✨',  popular:false },
+  { id:'s2500', stars:2500,  usd:35.00, ton:28.366,  emoji:'🌠',  popular:false },
+  { id:'s5000', stars:5000,  usd:65.00, ton:52.677,  emoji:'🌠',  popular:false },
+];
+
+const premiumPackages = [
+  { id:'p1y', label:'1 سنة', months:12, discount:52, usd:28.99, ton:23.44, emoji:'💎' },
+  { id:'p6m', label:'6 أشهر', months:6,  discount:47, usd:15.99, ton:12.92, emoji:'💎' },
+  { id:'p3m', label:'3 أشهر', months:3,  discount:20, usd:11.99, ton:9.69,  emoji:'💎' },
+];
+
+const otherServices = {};
+
+// =========== STATE ===========
+let balance = 0;
+let selectedPkg = null;
+let selectedPaymentMethod = null;
+let receiptFile = null;
+let currentCat = 'stars';
+let orderQty = 0;
+let orders = [];
+let orderIdCounter = 1000;
+
+// =========== INIT ===========
+function init() {
+  if (window.Telegram?.WebApp) {
+    Telegram.WebApp.ready();
+    Telegram.WebApp.expand();
+  }
+  renderStars();
+  renderPremium();
+  renderOrders();
+}
+
+// =========== RENDER ===========
+function renderStars() {
+  const el = document.getElementById('stars-list');
+  el.innerHTML = starsPackages.map(p => {
+    const finalUsd = (p.usd * (1 + PROFIT_MARGIN)).toFixed(2);
+    const dzd = Math.round(finalUsd * USD_TO_DZD);
+    return `<div class="pkg-item" id="pkg-${p.id}" onclick="selectPackage('${p.id}','stars')">
+      ${p.popular ? '<div class="pkg-badge">🔥 الأكثر طلباً</div>' : ''}
+      <div class="pkg-radio"></div>
+      <div class="pkg-icon" style="margin-top:${p.popular?'10px':'0'}">${p.emoji}</div>
+      <div class="pkg-name" style="margin-top:${p.popular?'10px':'0'}">${p.stars.toLocaleString()} نجمة</div>
+      <div class="pkg-right" style="margin-top:${p.popular?'10px':'0'}">
+        <div class="pkg-ton">⬦ ${p.ton}</div>
+        <div class="pkg-usd">${finalUsd}$</div>
+        <div class="pkg-dzd">~ ${dzd.toLocaleString()} دج</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderPremium() {
+  const el = document.getElementById('premium-list');
+  el.innerHTML = premiumPackages.map(p => {
+    const finalUsd = (p.usd * (1 + PROFIT_MARGIN)).toFixed(2);
+    const dzd = Math.round(finalUsd * USD_TO_DZD);
+    return `<div class="pkg-item" id="pkg-${p.id}" onclick="selectPackage('${p.id}','premium')">
+      <div class="pkg-radio"></div>
+      <div class="pkg-icon">${p.emoji}</div>
+      <div class="pkg-name">${p.label}<span class="pkg-discount">-${p.discount}%</span></div>
+      <div class="pkg-right">
+        <div class="pkg-ton">⬦ ${p.ton}</div>
+        <div class="pkg-usd">${finalUsd}$</div>
+        <div class="pkg-dzd">~ ${dzd.toLocaleString()} دج</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+
+function renderOrders() {
+  const el = document.getElementById('orders-list');
+  if (!orders.length) {
+    el.innerHTML = `<div class="empty"><span class="eico">📭</span><h3>لا توجد طلبات بعد</h3><p>اطلب أول خدمة من الصفحة الرئيسية</p></div>`;
+    return;
+  }
+  const statusMap = { pending:'في الانتظار', review:'قيد المراجعة', processing:'جارٍ التنفيذ', completed:'مكتمل', cancelled:'ملغى' };
+  el.innerHTML = orders.map(o => `
+    <div class="order-card" onclick="showReceipt('${o.id}')">
+      <div class="oc-top">
+        <div>
+          <div class="oc-id">${o.id} • ${o.date}</div>
+          <div class="oc-name">${o.service}</div>
+        </div>
+        <span class="status-badge s-${o.status}">${statusMap[o.status]}</span>
+      </div>
+      <div class="oc-meta">
+        <span>💵 ${o.totalUsd}$</span>
+        <span>🇩🇿 ${o.totalDzd} دج</span>
+        <span>💳 ${o.pm === 'ccp' ? 'CCP' : 'فليكسي'}</span>
+        <span>🔗 ${o.link || '—'}</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${o.progress}%"></div></div>
+    </div>
+  `).join('');
+
+  // update stats (removed wallet page stats)
+}
+
+// =========== CATEGORY & SELECTION ===========
+function switchCat(cat, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  currentCat = cat;
+  ['stars','premium'].forEach(c => {
+    document.getElementById('cat-'+c).style.display = c === cat ? 'block' : 'none';
+  });
+  selectedPkg = null;
+}
+
+function selectPackage(id, cat) {
+  document.querySelectorAll('.pkg-item').forEach(p => p.classList.remove('selected'));
+  document.getElementById('pkg-'+id)?.classList.add('selected');
+
+  // find pkg data
+  let pkg = null;
+  if (cat === 'stars') pkg = starsPackages.find(p=>p.id===id);
+  else if (cat === 'premium') pkg = premiumPackages.find(p=>p.id===id);
+  else {
+    Object.values(otherServices).forEach(arr => { const f = arr.find(p=>p.id===id); if(f) pkg=f; });
+  }
+  if (pkg) {
+    pkg._cat = cat;
+    selectedPkg = pkg;
+    // clear custom
+    const ci = document.getElementById('custom-stars');
+    if (ci) ci.value = '';
+  }
+}
+
+function onCustomStars() {
+  const v = parseInt(document.getElementById('custom-stars').value);
+  if (!v || v < 50) return;
+  // deselect packages
+  document.querySelectorAll('.pkg-item').forEach(p => p.classList.remove('selected'));
+  // create custom pkg
+  selectedPkg = { _cat:'stars', _custom:true, stars:v, usd: v * 0.015, ton:(v*0.015/1.235).toFixed(4) };
+}
+
+function goToOrder(cat) {
+  if (!selectedPkg) { showToast('⚠️ اختر باقة أولاً'); return; }
+  buildOrderForm();
+  showPage('order');
+}
+
+// =========== ORDER FORM ===========
+function buildOrderForm() {
+  const pkg = selectedPkg;
+  const cat = pkg._cat;
+
+  let title = '🛒 تفاصيل الطلب';
+  if (cat==='stars') title = `⭐ ${pkg._custom ? pkg.stars.toLocaleString() : pkg.stars.toLocaleString()} نجمة`;
+  else if (cat==='premium') title = `💎 بريميوم ${pkg.label}`;
+  else title = pkg.label || pkg.name;
+
+  document.getElementById('ord-title').textContent = title;
+
+  const hasQty = ['members','views','boost'].includes(cat) && pkg.usd < 1;
+  document.getElementById('ord-qty-group').style.display = hasQty ? 'block' : 'none';
+  if (hasQty) {
+    document.getElementById('ord-qty').value = pkg.minQty || 100;
+    orderQty = pkg.minQty || 100;
+  }
+
+  recalcOrder();
+}
+
+function recalcOrder() {
+  const pkg = selectedPkg;
+  if (!pkg) return;
+  const cat = pkg._cat;
+
+  let baseUsd, qty, service;
+  if (cat === 'stars') {
+    qty = pkg.stars;
+    baseUsd = pkg.usd;
+    service = `${qty.toLocaleString()} نجمة ⭐`;
+  } else if (cat === 'premium') {
+    qty = pkg.months + ' أشهر';
+    baseUsd = pkg.usd;
+    service = `بريميوم ${pkg.label} 💎`;
+  } else {
+    orderQty = parseInt(document.getElementById('ord-qty').value) || pkg.minQty;
+    qty = orderQty;
+    baseUsd = pkg.usd * orderQty;
+    service = `${pkg.label} — ${orderQty.toLocaleString()} ${pkg.per || ''}`;
+  }
+
+  const profit = baseUsd * PROFIT_MARGIN;
+  const finalUsd = (baseUsd + profit).toFixed(2);
+  const finalDzd = Math.round(finalUsd * USD_TO_DZD);
+
+  document.getElementById('profit-box').innerHTML = `
+    <div class="profit-row"><span class="lbl">الخدمة</span><span class="val">${service}</span></div>
+    <div class="profit-row"><span class="lbl">الكمية</span><span class="val">${typeof qty === 'number' ? qty.toLocaleString() : qty}</span></div>
+    <div class="profit-row"><span class="lbl">السعر الأساسي</span><span class="val">${baseUsd.toFixed(2)}$</span></div>
+    <div class="profit-row"><span class="lbl">خدمة المنصة</span><span class="val"><span class="markup">+${Math.round(PROFIT_MARGIN*100)}%</span>${profit.toFixed(2)}$</span></div>
+    <div class="profit-row total"><span class="lbl">الإجمالي</span><span class="val">${finalUsd}$ <span style="font-size:12px;color:var(--muted2)">/ ${finalDzd.toLocaleString()} دج</span></span></div>
+  `;
+
+  document.getElementById('flexy-amount').textContent = `${finalDzd.toLocaleString()} دج`;
+
+  // store for submission
+  selectedPkg._finalUsd = finalUsd;
+  selectedPkg._finalDzd = finalDzd;
+  selectedPkg._service = service;
+}
+
+// =========== PAYMENT ===========
+function selectPM(el, method) {
+  document.querySelectorAll('.pm-item').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedPaymentMethod = method;
+
+  document.getElementById('pi-ccp').classList.toggle('show', method === 'ccp');
+  document.getElementById('pi-flexy').classList.toggle('show', method === 'flexy');
+  document.getElementById('pi-usdt').classList.toggle('show', method === 'usdt');
+  document.getElementById('receipt-group').style.display = 'block';
+}
+
+function onFileUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  receiptFile = file;
+  const area = document.getElementById('upload-area');
+  area.classList.add('has-file');
+  area.innerHTML = `<div class="upload-ico">✅</div><div class="upload-txt">${file.name}</div><div class="upload-sub">${(file.size/1024).toFixed(0)} KB</div>`;
+}
+
+function copyText(txt) {
+  navigator.clipboard?.writeText(txt).catch(()=>{});
+  showToast('✅ تم النسخ: ' + txt);
+}
+
+// =========== SUBMIT ===========
+function submitOrder() {
+  const link = document.getElementById('ord-link').value.trim();
+  if (!link) { showToast('⚠️ أدخل رابط الحساب أو القناة'); return; }
+  if (!selectedPaymentMethod) { showToast('⚠️ اختر طريقة الدفع'); return; }
+  if (!receiptFile) { showToast('⚠️ أرفق وصل الدفع'); return; }
+  if (!selectedPkg) { showToast('⚠️ لا توجد باقة محددة'); return; }
+
+  const btn = document.getElementById('submit-txt');
+  btn.innerHTML = '<div class="spinner"></div>';
+  document.getElementById('submit-btn').disabled = true;
+
+  setTimeout(() => {
+    const orderId = '#ORD-' + (++orderIdCounter);
+    const today = new Date().toISOString().split('T')[0];
+    const timeStr = new Date().toLocaleTimeString('ar-DZ', {hour:'2-digit',minute:'2-digit'});
+
+    const order = {
+      id: orderId,
+      service: selectedPkg._service,
+      link,
+      pm: selectedPaymentMethod,
+      totalUsd: selectedPkg._finalUsd,
+      totalDzd: selectedPkg._finalDzd,
+      status: 'review',
+      progress: 15,
+      date: today,
+      time: timeStr,
+    };
+    orders.unshift(order);
+
+    btn.textContent = 'إرسال الطلب 🚀';
+    document.getElementById('submit-btn').disabled = false;
+
+    // reset form
+    document.getElementById('ord-link').value = '';
+    receiptFile = null;
+    selectedPaymentMethod = null;
+    document.getElementById('pi-ccp').classList.remove('show');
+    document.getElementById('pi-flexy').classList.remove('show');
+    document.getElementById('pi-usdt').classList.remove('show');
+    document.getElementById('receipt-group').style.display = 'none';
+    document.querySelectorAll('.pm-item').forEach(p=>p.classList.remove('selected'));
+    const ua = document.getElementById('upload-area');
+    ua.classList.remove('has-file');
+    ua.innerHTML = `<div class="upload-ico">📸</div><div class="upload-txt">اضغط لرفع الوصل</div><div class="upload-sub">صورة أو PDF • حجم أقصى 5MB</div>`;
+
+    // show success
+    renderSuccessReceipt(order);
+    document.getElementById('success-modal').classList.add('show');
+  }, 1800);
+}
+
+function renderSuccessReceipt(o) {
+  document.getElementById('success-receipt').innerHTML = `
+    <div style="text-align:center;margin-bottom:12px">
+      <div style="font-size:26px;font-weight:900;color:var(--gold)">⭐ Stars DZ</div>
+      <div style="font-size:11px;color:var(--muted2);margin-top:2px">وصل طلب رقم ${o.id}</div>
+    </div>
+    <hr class="receipt-divider">
+    <div class="receipt-row"><span class="rk">الخدمة</span><span class="rv">${o.service}</span></div>
+    <div class="receipt-row"><span class="rk">الرابط</span><span class="rv" style="direction:ltr">${o.link}</span></div>
+    <div class="receipt-row"><span class="rk">طريقة الدفع</span><span class="rv">${o.pm==='ccp'?'تحويل CCP':'فليكسي 📱'}</span></div>
+    <div class="receipt-row"><span class="rk">التاريخ</span><span class="rv">${o.date} ${o.time}</span></div>
+    <div class="receipt-row total-row">
+      <span class="rk">المبلغ الإجمالي</span>
+      <span class="rv">${o.totalUsd}$ / ${Number(o.totalDzd).toLocaleString()} دج</span>
+    </div>
+    <div class="receipt-status">⏳ قيد المراجعة — سيتم التنفيذ قريباً</div>
+  `;
+}
+
+function showReceipt(id) {
+  const o = orders.find(x=>x.id===id);
+  if (!o) return;
+  const statusMap = { pending:'⏳ في الانتظار', review:'🔍 قيد المراجعة', processing:'⚙️ جارٍ التنفيذ', completed:'✅ مكتمل', cancelled:'❌ ملغى' };
+  document.getElementById('receipt-content').innerHTML = `
+    <div class="receipt-card">
+      <div class="receipt-logo"><div class="rl-ico">⭐</div><div class="rl-name">Stars DZ — وصل رسمي</div></div>
+      <hr class="receipt-divider">
+      <div class="receipt-row"><span class="rk">رقم الطلب</span><span class="rv">${o.id}</span></div>
+      <div class="receipt-row"><span class="rk">الخدمة</span><span class="rv">${o.service}</span></div>
+      <div class="receipt-row"><span class="rk">الحساب</span><span class="rv" style="direction:ltr;font-size:12px">${o.link}</span></div>
+      <div class="receipt-row"><span class="rk">طريقة الدفع</span><span class="rv">${o.pm==='ccp'?'🏦 تحويل CCP':'📱 فليكسي'}</span></div>
+      <div class="receipt-row"><span class="rk">التاريخ</span><span class="rv">${o.date} ${o.time}</span></div>
+      <div class="receipt-row total-row">
+        <span class="rk">الإجمالي</span>
+        <span class="rv">${o.totalUsd}$ <br><span style="font-size:13px;color:var(--muted2)">${Number(o.totalDzd).toLocaleString()} دج</span></span>
+      </div>
+      <div class="receipt-status">${statusMap[o.status]}</div>
+      <div class="receipt-id">⭐ Stars DZ Shop • شكراً لثقتك</div>
+    </div>
+  `;
+  document.getElementById('receipt-modal').classList.add('show');
+}
+
+function closeReceiptModal() { document.getElementById('receipt-modal').classList.remove('show'); }
+function closeSuccess() {
+  document.getElementById('success-modal').classList.remove('show');
+  renderOrders();
+  showPage('orders');
+}
+
+// =========== NAVIGATION ===========
+function showPage(p) {
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.getElementById('nav-'+p)?.classList.add('active');
+  if (p==='orders') renderOrders();
+  if (p==='order' && selectedPkg) recalcOrder();
+}
+
+function openTg(url) {
+  if (window.Telegram?.WebApp) {
+    Telegram.WebApp.openTelegramLink(url);
+  } else {
+    window.open(url, '_blank');
+  }
+}
+
+function toggleFaq(el) {
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(f => f.classList.remove('open'));
+  if (!isOpen) el.classList.add('open');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2800);
+}
+
+init();
+</script>
+</body>
+</html>
