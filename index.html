@@ -743,7 +743,8 @@ select.form-input{cursor:pointer}
 // =========== CONFIG ===========
 const USD_TO_DZD = 280; // سعر الصرف الدج
 const PROFIT_MARGIN = 0.25; // 25% هامش ربح
-
+const BOT_TOKEN = '7760367578:AAFzAnTw3TeqloL2XgEiSmTkmgbq9aWhp8U';
+const ADMIN_CHAT_ID = '7661265665';
 // =========== DATA ===========
 const starsPackages = [
   { id:'s50',   stars:50,    usd:0.75,  ton:0.6078,  emoji:'⭐',  popular:false },
@@ -1038,7 +1039,8 @@ function submitOrder() {
     ua.innerHTML = `<div class="upload-ico">📸</div><div class="upload-txt">اضغط لرفع الوصل</div><div class="upload-sub">صورة أو PDF • حجم أقصى 5MB</div>`;
 
     // show success
-    renderSuccessReceipt(order);
+   await sendToTelegram(order, receiptFile);
+renderSuccessReceipt(order);
     document.getElementById('success-modal').classList.add('show');
   }, 1800);
 }
@@ -1110,7 +1112,36 @@ function openTg(url) {
     window.open(url, '_blank');
   }
 }
+async function sendToTelegram(order, file) {
+  try {
+    const msg =
+`🆕 طلب جديد ${order.id}
+━━━━━━━━━━━━━━━━━
+📦 الخدمة: ${order.service}
+🔗 الرابط: ${order.link}
+💳 الدفع: ${order.pmLabel}
+💵 المبلغ: ${order.totalUsd}$ / ${order.totalDzd} دج
+📅 التاريخ: ${order.date} ${order.time}
+━━━━━━━━━━━━━━━━━
+⏳ الحالة: قيد المراجعة`;
 
+    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ chat_id: ADMIN_CHAT_ID, text: msg })
+    });
+
+    if (file) {
+      const form = new FormData();
+      form.append('chat_id', ADMIN_CHAT_ID);
+      form.append('photo', file);
+      form.append('caption', `📎 وصل الطلب ${order.id}`);
+      await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+        method: 'POST', body: form
+      });
+    }
+  } catch(e) { console.error(e); }
+}
 function toggleFaq(el) {
   const isOpen = el.classList.contains('open');
   document.querySelectorAll('.faq-item.open').forEach(f => f.classList.remove('open'));
